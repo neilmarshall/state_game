@@ -37,7 +37,7 @@ void Game::run() {
         std::cout << "Play again? ('Y' / 'y' to continue, any other key to exit)\n";
         std::cin >> play_again_choice;
         std::cin.ignore();
-    } while (play_again_choice == 'Y' && play_again_choice == 'y');
+    } while (play_again_choice == 'Y' || play_again_choice == 'y');
     std::cout << "Game Exited!!!" << std::endl;
 
     return;
