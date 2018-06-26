@@ -1,8 +1,7 @@
 #include "game.h"
 
 Game::Game() {
-    read_state_data("states.csv");
-    shuffle_state_data();
+    read_state_data("states.txt");
 }
 
 void Game::read_state_data(std::string fpath) {
@@ -16,7 +15,9 @@ void Game::read_state_data(std::string fpath) {
     }
     else {
         std::cout << "File could not be opened!\n";
+        return;
     }
+    shuffle_state_data();
 }
 
 void Game::shuffle_state_data() {
@@ -26,37 +27,49 @@ void Game::shuffle_state_data() {
 }
 
 void Game::run() {
-    char menu_choice;
+    
+    if (state_list.empty()) return;
+    
+    char play_again_choice;
     do {
-        std::cout << "Please hit any key to play a round or 'q' to quit:\n";
-        std::getline(std::cin, menu_choice);
-        // std::cin >> menu_choice;
-        if (menu_choice == "q") break;
-        // if (menu_choice == 'q') break;
-        // std::cin.clear();
-        std::cin.ignore();
+        std::system("clear");
         play_round();
-    } while (true);
+        std::cout << "Play again? ('Y' / 'y' to continue, any other key to exit)\n";
+        std::cin >> play_again_choice;
+        std::cin.ignore();
+    } while (play_again_choice == 'Y' && play_again_choice == 'y');
     std::cout << "Game Exited!!!" << std::endl;
+
+    return;
 }
 
 void Game::play_round() {
     
-    int countdown = 1;
+    int countdown = 0;
     std::string state = state_list.front();
     state_list.pop_front();
-    std::string guess;
+    std::string lowercase_state = state;
+    std::transform(state.begin(), state.end(), lowercase_state.begin(), ::tolower);
+    std::string guess, lowercase_guess;
     
     do {
-        std::cout << "Identify the state: " << state.substr(0, countdown) << "___\n";
         countdown += 1;
+        std::cout << "Identify the state: " << state.substr(0, countdown) << "___\n";
         std::getline(std::cin, guess);
-        std::cout << "you guessed " << guess << std::endl;
-    } while (guess != state || countdown < state.size());
+        std::system("clear");
+        lowercase_guess = guess;
+        std::transform(guess.begin(), guess.end(), lowercase_guess.begin(), ::tolower);
+        if (lowercase_guess == lowercase_state) break;
+        std::cout << "You guessed " << guess << " - that is not correct. ";
+        std::cout << "Please guess again" << std::endl;
+    } while (countdown < state.size());
     
     if (guess == state) {
         std::cout << "Congratulations - you guessed '" + state + "' correctly!!!\n";
     } else {
-        std::cout << "Unlucky - you did not guess '" + state + "' - better luckt next time!!!\n";
+        std::cout << "Unlucky - you did not guess '" + state;
+        std::cout << "' - better luck next time!!!\n";
     }
+
+    return;
 }
