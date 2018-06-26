@@ -1,14 +1,14 @@
-#include <iostream>
+/*
+The aim of this program is to require users to name a US state that
+begins with a specified letter.
+*/
 
-int main() {
+#include "game.h"
 
-    std::string menu_choice;
-    do {
-        std::cout << "Hit any key to continue, or 'q' to quit:\n";
-        std::getline(std::cin, menu_choice);
-    } while (menu_choice != "q");
-
-    std::cout << "Game exited!!!";
+int main()
+{
+    Game* game = new Game();  // instantiate Game object
+    game->run();  // run game
 
     return 0;
 }
