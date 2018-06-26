@@ -5,11 +5,13 @@ Game::Game() {
 }
 
 void Game::read_state_data(std::string fpath) {
+
     std::string state;
     std::ifstream ifile(fpath);
+
     if (ifile.is_open()) {
         while (getline(ifile, state)) {
-            state_list.push_back(state);
+            this->state_list.push_back(state);
         }
         ifile.close();
     }
@@ -17,21 +19,23 @@ void Game::read_state_data(std::string fpath) {
         std::cout << "File could not be opened!\n";
         return;
     }
+    
     shuffle_state_data();
+    
+    return;
 }
 
 void Game::shuffle_state_data() {
     auto seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine engine(seed);
-    std::shuffle(state_list.begin(), state_list.end(), engine);
+    std::shuffle(this->state_list.begin(), this->state_list.end(), engine);
 }
 
 void Game::run() {
-    
-    if (state_list.empty()) return;
-    
+        
     char play_again_choice;
     do {
+        if (state_list.empty()) break;
         std::system("clear");
         play_round();
         std::cout << "Play again? ('Y' / 'y' to continue, any other key to exit)\n";
@@ -46,8 +50,8 @@ void Game::run() {
 void Game::play_round() {
     
     int countdown = 0;
-    std::string state = state_list.front();
-    state_list.pop_front();
+    std::string state = this->state_list.front();
+    this->state_list.pop_front();
     std::string lowercase_state = state;
     std::transform(state.begin(), state.end(), lowercase_state.begin(), ::tolower);
     std::string guess, lowercase_guess;
