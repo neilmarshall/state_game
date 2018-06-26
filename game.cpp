@@ -28,9 +28,7 @@ void Game::read_state_data(std::string fpath) {
         return;
     }
     
-    shuffle_state_data();
-    
-    return;
+    this->shuffle_state_data();
 }
 
 //******************************************************************************
@@ -55,14 +53,12 @@ void Game::run() {
     do {
         if (state_list.empty()) break;
         std::system("clear");
-        play_round();
+        this->play_round();
         std::cout << "Play again? ('Y' / 'y' to continue, any other key to exit)\n";
         std::cin >> play_again_choice;
         std::cin.ignore();
     } while (play_again_choice == 'Y' || play_again_choice == 'y');
     std::cout << "Game Exited!!!" << std::endl;
-
-    return;
 }
 
 //******************************************************************************
@@ -98,6 +94,4 @@ void Game::play_round() {
         std::cout << "Unlucky - you did not guess '" + state;
         std::cout << "' - better luck next time!!!\n";
     }
-
-    return;
 }
