@@ -88,7 +88,7 @@ void Game::play_round() {
         std::cout << "Please guess again" << std::endl;
     } while (countdown < state.size());
     
-    if (guess == state) {
+    if (lowercase_guess == lowercase_state) {
         std::cout << "Congratulations - you guessed '" + state + "' correctly!!!\n";
     } else {
         std::cout << "Unlucky - you did not guess '" + state;
