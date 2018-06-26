@@ -1,8 +1,16 @@
 #include "game.h"
 
+//******************************************************************************
+//    Class constructor - reads states into a deque
+//******************************************************************************
+
 Game::Game() {
     read_state_data("states.txt");
 }
+
+//******************************************************************************
+//    Function to reads states into a deque (and then shuffle them)
+//******************************************************************************
 
 void Game::read_state_data(std::string fpath) {
 
@@ -25,11 +33,21 @@ void Game::read_state_data(std::string fpath) {
     return;
 }
 
+//******************************************************************************
+//    Function to shuffle states deque
+//******************************************************************************
+
 void Game::shuffle_state_data() {
     auto seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine engine(seed);
     std::shuffle(this->state_list.begin(), this->state_list.end(), engine);
 }
+
+//******************************************************************************
+//    Function to control running the game - launches once (if states deque not
+//    empty) and subsequently loops as long as user indicates they want to
+//    continue
+//******************************************************************************
 
 void Game::run() {
         
@@ -46,6 +64,12 @@ void Game::run() {
 
     return;
 }
+
+//******************************************************************************
+//    Function to play an individual round - called by 'run' repeatedly; reads
+//    a state and prompts user to guess the state (compares guess again state
+//    on a case-less basis for simplicity)
+//******************************************************************************
 
 void Game::play_round() {
     
