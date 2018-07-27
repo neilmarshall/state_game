@@ -9,6 +9,7 @@
 class Game {
     public:
         Game();
+        ~Game();
         void run();
     private:
         std::deque<std::string> state_list;
