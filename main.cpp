@@ -9,6 +9,7 @@ int main()
 {
     Game* game = new Game();  // instantiate Game object
     game->run();  // run game
+    delete game;
 
     return 0;
 }
